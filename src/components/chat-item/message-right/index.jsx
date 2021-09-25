@@ -11,13 +11,20 @@ export const MessageRight = (props) => {
   const photoURL = props.img;
   const displayName = props.userId ? props.userId : "----";
   const classes = useMessageStyles();
+
   return (
     <>
       <Box className={classes.messageRow} flexDirection="row-reverse" mb={2}>
         {props.messageId === "failed" && (
           <Tooltip title="Could not send. Click to retry!">
             <ButtonBase
-              onClick={() => props.retry({ channelId: props.channel, userId: props.userId, text: message })}
+              onClick={() =>
+                props.retry({
+                  channelId: props.channel,
+                  userId: props.userId,
+                  text: message,
+                })
+              }
               style={{ borderRadius: "50%", height: "100%" }}
             >
               <Error style={{ color: "tomato" }} />

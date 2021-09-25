@@ -1,12 +1,13 @@
-import React, {
-  useEffect,
-  useState,
-  useRef,
-  useLayoutEffect,
-} from "react";
+import React, { useEffect, useState, useRef, useLayoutEffect } from "react";
 import { Box } from "@mui/system";
 import { ArrowDownwardTwoTone, ArrowUpwardTwoTone } from "@mui/icons-material";
-import { Button, CircularProgress, Divider, IconButton, TextField } from "@mui/material";
+import {
+  Button,
+  CircularProgress,
+  Divider,
+  IconButton,
+  TextField,
+} from "@mui/material";
 import { ChatItem } from "../chat-item";
 import {
   FETCH_LATEST_MESSAGES,
@@ -24,34 +25,23 @@ export const ChatHistory = ({ chat }) => {
   const scrollToBottom = () => {
     let container = document.getElementById("chat-container");
     if (!loadingMore) {
-      setTimeout(
-        () => container.scrollTop = container.scrollHeight,
-        200
-      );
+      setTimeout(() => (container.scrollTop = container.scrollHeight), 200);
     }
   };
 
   const classes = useStyles();
   let hasWallpaper = chat.wallpaper.length > 0;
 
-  const [
-    sendMessage,
-    { data: sendingData, loading: sending, error: sendingError },
-  ] = useMutation(POST_MESSAGE);
+  const [sendMessage, { loading: sending }] = useMutation(POST_MESSAGE);
 
   const [
     getLatestMessages,
-    {
-      loading: loadingLatestMessages,
-      error: errorLatestMessages,
-      data: latestMessages,
-    },
+    { loading: loadingLatestMessages, data: latestMessages },
   ] = useLazyQuery(FETCH_LATEST_MESSAGES);
 
-  const [getMessages, { loading, error, data }] =
-    useLazyQuery(FETCH_MORE_MESSAGES);
+  const [getMessages, { loading, data }] = useLazyQuery(FETCH_MORE_MESSAGES);
 
-  const [message, setMessage] = useState("");
+  const [message, setMessage] = useState(localStorage.getItem("message") || "");
   const [loadingMore, setLoadingMore] = useState(false);
   const [messagesData, setMessagesData] = useState([]);
 
@@ -81,10 +71,9 @@ export const ChatHistory = ({ chat }) => {
     setMessagesData([...messages]);
   }, [latestMessages, data]);
 
-  useEffect(()=>{
+  useEffect(() => {
     setMessagesData([]);
-
-  },[chat.channel])
+  }, [chat.channel]);
 
   useLayoutEffect(scrollToBottom, [messagesData]);
 
@@ -105,6 +94,7 @@ export const ChatHistory = ({ chat }) => {
         }
         setMessagesData(withPostedMessage);
         setMessage("");
+        localStorage.setItem("message", "");
       })
       .catch((e) => {
         let failedMessage = {
@@ -120,7 +110,7 @@ export const ChatHistory = ({ chat }) => {
 
   const handleFetchMore = () => {
     setLoadingMore(true);
-    document.getElementById("chat-container").scrollTo(0,0)
+    document.getElementById("chat-container").scrollTo(0, 0);
     getMessages({
       variables: {
         channelId: chat.channel,
@@ -161,10 +151,15 @@ export const ChatHistory = ({ chat }) => {
           height="53vh"
           overflow="auto"
           position="relative"
-          id={'chat-container'}
+          id={"chat-container"}
         >
           {loading || loadingLatestMessages ? (
-            <Box display="flex" justifyContent="center" alignItems="center" flexDirection="column">
+            <Box
+              display="flex"
+              justifyContent="center"
+              alignItems="center"
+              flexDirection="column"
+            >
               <CircularProgress size="80px" />
               <Box mt={3}>Fetching messages...</Box>
             </Box>
@@ -180,7 +175,8 @@ export const ChatHistory = ({ chat }) => {
                 disabled={
                   (data && data.fetchMoreMessages.length === 0) || loading
                 }
-              ><ArrowUpwardTwoTone />
+              >
+                <ArrowUpwardTwoTone />
               </IconButton>
             </>
           )}
@@ -202,7 +198,7 @@ export const ChatHistory = ({ chat }) => {
               variant="contained"
               className={classes.downButton}
               onClick={() => {
-                container.scrollTop = container.scrollHeight
+                container.scrollTop = container.scrollHeight;
               }}
               size="small"
             >
@@ -225,7 +221,10 @@ export const ChatHistory = ({ chat }) => {
             fullWidth
             style={{ marginRight: 16 }}
             value={message}
-            onChange={(e) => setMessage(e.target.value)}
+            onChange={(e) => {
+              setMessage(e.target.value);
+              localStorage.setItem("message", e.target.value);
+            }}
           />
           <Button
             disabled={message.length === 0 || !chat.user || !chat.channel}
@@ -235,7 +234,9 @@ export const ChatHistory = ({ chat }) => {
             <Box>Send </Box>
             <Box>
               {" "}
-              {sending && <CircularProgress style={{ marginLeft: 24 }} />}{" "}
+              {sending && (
+                <CircularProgress style={{ marginLeft: 24, color: "white" }} />
+              )}{" "}
             </Box>
           </Button>
         </Box>

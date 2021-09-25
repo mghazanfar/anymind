@@ -11,29 +11,31 @@ export function ChooseUser() {
 
   const handleChange = (event, changeChat, chat) => {
     setUser(event.target.value);
-    changeChat({...chat, user:event.target.value})
+    changeChat({ ...chat, user: event.target.value });
   };
 
   return (
-    <ChatContext.Consumer>{({changeChat, chat}) =>
-      <Box>
-        <FormControl fullWidth>
-          <InputLabel id="demo-simple-select-label">
-            Choose your user
-          </InputLabel>
-          <Select
-            labelId="demo-simple-select-label"
-            id="demo-simple-select"
-            value={user}
-            label="Choose your user"
-            onChange={e => handleChange(e,changeChat,chat)}
-          >
-            <MenuItem value={"Sam"}>Sam</MenuItem>
-            <MenuItem value={"Russell"}>Russell</MenuItem>
-            <MenuItem value={"Joyse"}>Joyse</MenuItem>
-          </Select>
-        </FormControl>
-      </Box>
-    }</ChatContext.Consumer>
+    <ChatContext.Consumer>
+      {({ changeChat, chat }) => (
+        <Box>
+          <FormControl fullWidth>
+            <InputLabel id="demo-simple-select-label">
+              Choose your user
+            </InputLabel>
+            <Select
+              labelId="demo-simple-select-label"
+              id="demo-simple-select"
+              value={user}
+              label="Choose your user"
+              onChange={(e) => handleChange(e, changeChat, chat)}
+            >
+              <MenuItem value={"Sam"}>Sam</MenuItem>
+              <MenuItem value={"Russell"}>Russell</MenuItem>
+              <MenuItem value={"Joyse"}>Joyse</MenuItem>
+            </Select>
+          </FormControl>
+        </Box>
+      )}
+    </ChatContext.Consumer>
   );
 }

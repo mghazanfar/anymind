@@ -1,8 +1,6 @@
 import {
   ApolloClient,
   InMemoryCache,
-  ApolloProvider,
-  useQuery,
   gql,
 } from "@apollo/client";
 
@@ -51,17 +49,3 @@ export const POST_MESSAGE = gql`
     }
   }
 `;
-
-// export const fetchMoreMessages = (channelId, messageId, old) =>
-//   client
-//     .query({
-//       query: gql`
-//       query fetchMoreMessages(channelId: ${channelId}, messageId: ${messageId}, old: ${old}) {
-//         messageId
-//         text
-//         datetime
-//         userId
-//       }
-//     `,
-//     })
-//     .then((result) => console.log(result));

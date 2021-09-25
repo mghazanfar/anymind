@@ -5,7 +5,7 @@ import { ChooseChannel } from "../choose-channel";
 import { useStyles } from "../../styles";
 import { ChooseChatWallpaper } from "../choose-chat-wallpaper";
 
-export const ChooseChatting = ({chat, changeChat}) => {
+export const ChooseChatting = ({ chat, changeChat }) => {
   const classes = useStyles();
   return (
     <Box p={3} pt={0} className={classes.chooseChattingContainer} mt={8}>

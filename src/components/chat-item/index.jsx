@@ -21,6 +21,12 @@ const users = [
   },
 ];
 export const ChatItem = ({ sent, ...rest }) => {
-    let img = users.find(item=>item.name===rest.userId) ? users.find(item=>item.name===rest.userId).img :users[3].img
-  return sent ? <MessageRight {...rest} img={img} /> : <MessageLeft {...rest} img={img} />;
+  let img = users.find((item) => item.name === rest.userId)
+    ? users.find((item) => item.name === rest.userId).img
+    : users[3].img;
+  return sent ? (
+    <MessageRight {...rest} img={img} />
+  ) : (
+    <MessageLeft {...rest} img={img} />
+  );
 };

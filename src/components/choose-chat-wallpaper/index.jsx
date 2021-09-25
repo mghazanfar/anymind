@@ -9,7 +9,7 @@ const chatBackgrounds = [
   "https://images.pexels.com/photos/1083822/pexels-photo-1083822.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=1500",
   "https://cdn.pixabay.com/photo/2018/01/14/23/12/nature-3082832__480.jpg",
   "https://www.androidguys.com/wp-content/uploads/2015/12/Wave-Wallpapers-1.jpg",
-  ""
+  "",
 ];
 
 export const ChooseChatWallpaperItem = ({
@@ -22,16 +22,16 @@ export const ChooseChatWallpaperItem = ({
       {({ chat }) => {
         let isSelected = bgImage === chat.wallpaper;
         return (
-          <Paper onClick={() => onWallpaperChange(bgImage)}
-          style={{
-            backgroundImage: `url(${bgImage})`,
-            borderColor: isSelected ? "rgb(69 137 185)" : "",
-          }}
-          className={className}
-          elevation={11}>
-            <ButtonBase
-              className={className}
-            />
+          <Paper
+            onClick={() => onWallpaperChange(bgImage)}
+            style={{
+              backgroundImage: `url(${bgImage})`,
+              borderColor: isSelected ? "rgb(69 137 185)" : "",
+            }}
+            className={className}
+            elevation={11}
+          >
+            <ButtonBase className={className} />
           </Paper>
         );
       }}
@@ -49,7 +49,7 @@ export const ChooseChatWallpaper = ({ onWallpaperChange, classes }) => {
             bgImage={bg}
             onWallpaperChange={onWallpaperChange}
             className={classes.wallpaperItem}
-            key={bg+i}
+            key={bg + i}
           />
         ))}
       </Box>
